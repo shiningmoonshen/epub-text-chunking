@@ -15,7 +15,7 @@ def main():
     chapters = chap_as_list(items)
     #chunk texts, limiting length
     chunks = chunk(chapters)
-    print(chunks['OEBPS/Oblivion_chap_1.html'][61])
+    #print(chunks['OEBPS/Oblivion_chap_1.html'][61])
     return chunks
 
 def chap_as_list(items):
@@ -30,6 +30,7 @@ def chap_as_list(items):
 def chapter_to_str(chapter):
     soup = BeautifulSoup(chapter.get_body_content(), 'html.parser')
     text = [para.get_text() for para in soup.find_all('p')]
+    print(text)
     for ti in range(len(text)):
         text.insert(ti, split_text_by_word_count(text[ti], 250))
     return text
@@ -43,6 +44,7 @@ def chunk(chapters):
 
 def split_text_by_word_count(text, word_count):
     # Process the text using spaCy
+    #print(text)
     doc = nlp(text)
 
     segments = []
@@ -65,6 +67,7 @@ def split_text_by_word_count(text, word_count):
         segments.append(" ".join(curr_segment))
 
     #returns a list of segments, all under set word count
+    #print(len(segments))
     return segments
 
 main()
